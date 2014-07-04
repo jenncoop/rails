@@ -54,12 +54,10 @@ module ActiveRecord
 
           coder = if class_name_or_coder == JSON
                     Coders::JSONColumn.new(class_name_or_coder)
+                  elsif [:load, :dump].all? { |x| class_name_or_coder.respond_to?(x) }
+                    class_name_or_coder
                   else
-                    if [:load, :dump].all? { |x| class_name_or_coder.respond_to?(x) }
-                      class_name_or_coder
-                    else
-                      Coders::YAMLColumn.new(class_name_or_coder)
-                    end
+                    Coders::YAMLColumn.new(class_name_or_coder)
                   end
 
           # merge new serialized attribute and create new hash to ensure that each class in inheritance hierarchy
