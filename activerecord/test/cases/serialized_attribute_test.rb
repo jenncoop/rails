@@ -87,7 +87,7 @@ class SerializedAttributeTest < ActiveRecord::TestCase
     t.save!
     t.reload
 
-    assert(t.content.is_a?(Hash))
+    assert_instance_of(Hash, t.content)
     assert_equal(my_post.id, t.content["id"])
     assert_equal(my_post.title, t.content["title"])
   end
