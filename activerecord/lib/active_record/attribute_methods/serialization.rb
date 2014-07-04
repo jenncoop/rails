@@ -52,7 +52,7 @@ module ActiveRecord
         def serialize(attr_name, class_name_or_coder = Object)
           include Behavior
 
-          coder = if class_name_or_coder.eql? JSON
+          coder = if class_name_or_coder == JSON
                     Coders::JSONColumn.new(class_name_or_coder)
                   else
                     if [:load, :dump].all? { |x| class_name_or_coder.respond_to?(x) }
