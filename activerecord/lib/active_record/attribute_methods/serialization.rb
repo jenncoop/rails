@@ -52,10 +52,14 @@ module ActiveRecord
         def serialize(attr_name, class_name_or_coder = Object)
           include Behavior
 
-          coder = if [:load, :dump].all? { |x| class_name_or_coder.respond_to?(x) }
-                    class_name_or_coder
+          coder = if class_name_or_coder.eql? JSON
+                    Coders::JSONColumn.new(class_name_or_coder)
                   else
-                    Coders::YAMLColumn.new(class_name_or_coder)
+                    if [:load, :dump].all? { |x| class_name_or_coder.respond_to?(x) }
+                      class_name_or_coder
+                    else
+                      Coders::YAMLColumn.new(class_name_or_coder)
+                    end
                   end
 
           # merge new serialized attribute and create new hash to ensure that each class in inheritance hierarchy
