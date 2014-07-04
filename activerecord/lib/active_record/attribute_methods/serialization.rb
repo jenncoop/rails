@@ -53,7 +53,7 @@ module ActiveRecord
           include Behavior
 
           coder = if class_name_or_coder == JSON
-                    Coders::JSONColumn.new
+                    Coders::JSON.new
                   elsif [:load, :dump].all? { |x| class_name_or_coder.respond_to?(x) }
                     class_name_or_coder
                   else
